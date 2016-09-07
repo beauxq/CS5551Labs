@@ -5,15 +5,21 @@
     <title>Login</title>
 </head>
 <body>
-    <!-- login -->
-    <form action="home.html">
-        <label for="name">Name</label>: <input type="text" id="name" name="name">
-        <br>
-        <input type="submit" value="Login">
-    </form>
-    <!-- register button -->
-    <form action="register.html">
-        <input type="submit" value="Register">
-    </form>
+    <table>
+        <tr>
+            <td><label for="username">Username</label>: </td>
+            <td><input type="text" id="username"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="button" id="loginButton" value="Login">
+                <input type="button" id="registerButton" value="Register">
+            </td>
+        </tr>
+    </table>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="insertPageTitle.js"></script>
+<script src="login.js"></script>
 </html>
