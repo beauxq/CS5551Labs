@@ -24,7 +24,7 @@ if (localStorage.hasOwnProperty(NAME_OF_USER_LIST_IN_STORAGE)) {
 }
 
 // test - show all users in localStorage
-users.keys.forEach(function(property) {
+Object.keys(users).forEach(function(property) {
     console.log(property);
     console.log(users[property]);
 });

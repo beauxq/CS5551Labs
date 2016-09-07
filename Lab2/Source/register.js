@@ -18,6 +18,6 @@ function registerClick() {
         "email": email
     };
     saveUsers();
-    window.location.href = "login";
+    window.location.href = "login.html";
 }
 $("#registerButton").click(registerClick);
