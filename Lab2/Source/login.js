@@ -16,8 +16,7 @@ if (localStorage.hasOwnProperty("users")) {
     // validate data in localStorage
     try {
         users = JSON.parse(localStorage.getItem("lab2"));
-    }
-    catch (e) {
+    } catch (e) {
         users = createUserListInLocalStorage();
     }
 } else {
@@ -25,12 +24,10 @@ if (localStorage.hasOwnProperty("users")) {
 }
 
 // test - show all users in localStorage
-for (var property in users) {
-    if (users.hasOwnProperty(property)) {
-        console.log(property);
-        console.log(users[property]);
-    }
-}
+users.keys.forEach(function(property) {
+    console.log(property);
+    console.log(users[property]);
+});
 
 // listener for login button
 function loginClick() {
