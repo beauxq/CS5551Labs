@@ -2,7 +2,12 @@
  * google sign in
  */
 
-function onSignIn(googleUser) {
+var googleUser;
+
+function onSignIn(response) {
+    googleUser = response;
+
+
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
@@ -23,3 +28,11 @@ function signOut() {
         console.log('User signed out.');
     });
 }
+
+/* ideas
+GET https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url=http%3A%2F%2Fwww.zophar.net&key={YOUR_API_KEY}
+
+ http://gateway-a.watsonplatform.net/calls/text/TextGetTextSentiment" +
+ "?apikey=d0e7bf68cdda677938e6c186eaf2b755ef737cd8" +
+ "&outputMode=json&text=" +
+ */
