@@ -8,7 +8,8 @@ function onSignIn(response) {
     googleUser = response;
 
     if (googleUser.isSignedIn()) {
-        window.location.href = "app.html";
+        document.getElementById("signOutDiv").innerHTML = '<input type="button" onclick="signOut()" value="Sign Out">';
+        document.getElementById("gotoApp").innerHTML = '<a href="app.html">Go To App</a>';
     }
 }
 
