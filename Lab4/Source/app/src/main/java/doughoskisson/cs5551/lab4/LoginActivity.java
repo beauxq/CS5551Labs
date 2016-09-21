@@ -3,6 +3,7 @@ package doughoskisson.cs5551.lab4;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -331,6 +332,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                Intent redirect = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(redirect);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
