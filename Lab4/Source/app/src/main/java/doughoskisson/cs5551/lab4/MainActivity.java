@@ -2,7 +2,6 @@ package doughoskisson.cs5551.lab4;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -29,19 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        /*
-        FloatingActionButton button = (FloatingActionButton) findViewById(R.id.button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
     }
 
     public void buttonAction(View v) {
@@ -97,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // this code taken from http://blog.sivavaka.com/2010/11/incompatiable-javascripts.html
     public static String encodeURIComponent(String originalStr) {
         String encodeString = null;
         try{
@@ -114,5 +101,4 @@ public class MainActivity extends AppCompatActivity {
 
         return encodeString;
     }
-
 }
