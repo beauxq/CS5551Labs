@@ -58,9 +58,10 @@
             <button ng-click="registerButtonClick()">Register</button>
           </div>
           <div id="home" ng-hide="state != 'home'">
-            <label for="homeInput">Input</label>: <input type="text" ng-model="homeInput" id="homeInput">
+            <label for="homeInput">Enter a thing</label>: <input type="text" ng-model="homeInput" id="homeInput">
             <button ng-click="submitButtonClick()">Submit</button>
-            {{homeInput}}
+            <br>
+            {{homeOutput}}
           </div>
         </div>
       </ion-content>

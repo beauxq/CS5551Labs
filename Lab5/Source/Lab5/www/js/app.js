@@ -23,7 +23,7 @@ angular.module('lab5', ['ionic'])
   });
 })
 
-.controller('appCtrl', function($scope) {
+.controller('appCtrl', function($scope, $http) {
   $scope.state = "login";
 
   $scope.loginUsername = "";
@@ -45,6 +45,11 @@ angular.module('lab5', ['ionic'])
 
   $scope.homeInput = "";
   $scope.submitButtonClick = function() {
-    $scope.homeInput = "Ha!";
+    $http.get("https://kgsearch.googleapis.com/v1/entities:search?query=" + $scope.homeInput + "&key=AIzaSyB5iB3hXTLR2JXODYudokbXLVa26tgi-cE&limit=1&indent=True")
+      .then(function(response) {
+        console.log("got response");
+        console.log(response);
+        $scope.homeOutput = $scope.homeInput + " is a " + response.data.itemListElement[0].result.description + ".";
+      });
   };
 });
