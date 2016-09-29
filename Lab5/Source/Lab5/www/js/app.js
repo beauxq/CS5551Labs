@@ -44,12 +44,28 @@ angular.module('lab5', ['ionic'])
   };
 
   $scope.homeInput = "";
+  $scope.homeOutputLines = [];
   $scope.submitButtonClick = function() {
     $http.get("https://kgsearch.googleapis.com/v1/entities:search?query=" + $scope.homeInput + "&key=AIzaSyB5iB3hXTLR2JXODYudokbXLVa26tgi-cE&limit=1&indent=True")
       .then(function(response) {
-        console.log("got response");
         console.log(response);
-        $scope.homeOutput = $scope.homeInput + " is a " + response.data.itemListElement[0].result.description + ".";
+        var description = response.data.itemListElement[0].result.description;
+        var url = response.data.itemListElement[0].result.detailedDescription.url;
+        console.log("url: " + url);
+        $http.post("https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyB5iB3hXTLR2JXODYudokbXLVa26tgi-cE",
+                   {"longUrl": url })
+        /*$http({
+          method: 'POST',
+          url: "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyB5iB3hXTLR2JXODYudokbXLVa26tgi-cE",
+          data: "longUrl=" + url,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        })*/
+        .then(function(response2) {
+          var shortUrl = response2.data.id;
+          $scope.homeOutputLines.push($scope.homeInput + " is a " + description + ".");
+          $scope.homeOutputLines.push("You can share this short url for more information:");
+          $scope.homeOutputLines.push(shortUrl);
+        });
       });
   };
 });

@@ -61,7 +61,7 @@
             <label for="homeInput">Enter a thing</label>: <input type="text" ng-model="homeInput" id="homeInput">
             <button ng-click="submitButtonClick()">Submit</button>
             <br>
-            {{homeOutput}}
+            <p ng-repeat="line in homeOutputLines">{{line}}</p>
           </div>
         </div>
       </ion-content>
