@@ -45,6 +45,6 @@ angular.module('lab5', ['ionic'])
 
   $scope.homeInput = "";
   $scope.submitButtonClick = function() {
-    $scope.input = "Ha!";
+    $scope.homeInput = "Ha!";
   };
 });
