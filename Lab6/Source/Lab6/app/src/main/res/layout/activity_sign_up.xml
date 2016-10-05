@@ -20,13 +20,53 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/fNameEditText"
+        android:layout_below="@+id/fNameLabel"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name"
+        android:layout_marginTop="16dp"
+        android:id="@+id/fNameLabel"
+        android:labelFor="@+id/fNameEditText"
+        android:layout_below="@+id/headerText"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/lNameEditText"
+        android:layout_below="@+id/lNameLabel"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name"
+        android:layout_marginTop="32dp"
+        android:id="@+id/lNameLabel"
+        android:labelFor="@+id/lNameEditText"
+        android:layout_below="@+id/fNameEditText"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:inputType="textPostalAddress"
         android:ems="10"
-        android:layout_marginTop="48dp"
         android:id="@+id/addressEditText"
-        android:text="Address"
-        android:layout_below="@+id/lNameEditText"
+        android:layout_below="@+id/addressLabel"
         android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:layout_marginTop="32dp"
+        android:id="@+id/addressLabel"
+        android:labelFor="@+id/addressEditText"
+        android:layout_below="@+id/lNameEditText"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -34,21 +74,16 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/emailEditText"
-        android:text="Email"
-        android:layout_marginTop="48dp"
-        android:layout_below="@+id/addressEditText"
+        android:layout_below="@+id/emailLabel"
         android:layout_alignParentStart="true" />
-
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="First Name"
-        android:ems="10"
-        android:layout_marginTop="40dp"
-        android:id="@+id/fNameEditText"
-        android:layout_below="@+id/headerText"
-        android:layout_alignParentStart="true" />
+        android:text="Email"
+        android:layout_marginTop="32dp"
+        android:id="@+id/emailLabel"
+        android:labelFor="@+id/emailEditText"
+        android:layout_below="@+id/addressEditText"/>
 
     <ImageButton
         android:layout_width="match_parent"
@@ -57,8 +92,9 @@
         android:id="@+id/imageButton"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/lNameEditText"
-        android:layout_above="@+id/addressEditText"
-        android:onClick="imageButtonClick"/>
+        android:layout_alignBottom="@+id/lNameEditText"
+        android:onClick="imageButtonClick"
+        android:contentDescription="Image" />
 
     <Button
         android:text="Proceed"
@@ -70,14 +106,4 @@
         android:layout_marginBottom="32dp"
         android:onClick="proceedButtonClick" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Last Name"
-        android:ems="10"
-        android:layout_marginTop="48dp"
-        android:id="@+id/lNameEditText"
-        android:layout_below="@+id/fNameEditText"
-        android:layout_alignParentStart="true" />
 </RelativeLayout>
