@@ -1,5 +1,6 @@
 package doughoskisson.cs5551.lab6;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,5 +17,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void imageButtonClick(View view) {
+        Intent redirect = new Intent(SignUp.this, ImageActivity.class);
+        startActivity(redirect);
     }
 }
