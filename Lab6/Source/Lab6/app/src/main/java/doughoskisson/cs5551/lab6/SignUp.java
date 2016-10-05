@@ -14,6 +14,8 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void proceedButtonClick(View view) {
+        Intent redirect = new Intent(SignUp.this, MapsActivity.class);
+        startActivity(redirect);
     }
 
     public void imageButtonClick(View view) {
