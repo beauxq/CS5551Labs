@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class Home extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     Bitmap photo;
@@ -22,7 +22,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_home);
 
         // get bundled information
         Bundle extras = getIntent().getExtras();

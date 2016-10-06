@@ -7,8 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -137,7 +135,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void proceedButtonClick(View view) {
-        Intent redirect = new Intent(SignUp.this, MapsActivity.class);
+        Intent redirect = new Intent(SignUp.this, Home.class);
         redirect.putExtra("photo", photo);
         redirect.putExtra("lat", latitude);
         redirect.putExtra("long", longitude);
