@@ -93,7 +93,6 @@
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/lNameEditText"
         android:layout_alignBottom="@+id/lNameEditText"
-        android:onClick="imageButtonClick"
         android:contentDescription="Image" />
 
     <Button

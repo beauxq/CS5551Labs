@@ -1,5 +1,7 @@
 package doughoskisson.cs5551.lab6;
 
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -7,21 +9,42 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    Bitmap photo;
+    double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        // get bundled information
+        Bundle extras = getIntent().getExtras();
+        photo = (Bitmap) extras.get("photo");
+        rotatePhoto();
+        latitude = (double) extras.get("lat");
+        longitude = (double) extras.get("long");
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    private void rotatePhoto() {
+        Matrix matrix = new Matrix();
+
+        matrix.postRotate(90);
+
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(photo, 200, 150, true);
+
+        photo = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
     }
 
 
@@ -38,11 +61,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        /*
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        */
+        LatLng homeLocation = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions()
+                           .position(homeLocation)
+                           .icon(BitmapDescriptorFactory.fromBitmap(photo))
+                           .title("Home"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(homeLocation));
     }
 }
