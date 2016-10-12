@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('lab5', ['ionic'])
+angular.module('lab5', ['ionic', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,7 +23,7 @@ angular.module('lab5', ['ionic'])
   });
 })
 
-.controller('appCtrl', function($scope, $http) {
+.controller('appCtrl', function($scope, $http, $cordovaDevice, $ionicPlatform) {
   $scope.state = "login";
 
   $scope.loginUsername = "";
@@ -42,6 +42,14 @@ angular.module('lab5', ['ionic'])
   $scope.registerButtonClick = function() {
     $scope.state = "login";
   };
+
+  // load cordova device plugin information into scope
+  $ionicPlatform.ready(function() {
+    $scope.dPlatform = $cordovaDevice.getPlatform();
+    $scope.dVersion = $cordovaDevice.getVersion();
+    $scope.dModel = $cordovaDevice.getModel();
+    $scope.dManufacturer = $cordovaDevice.getManufacturer();
+  });
 
   $scope.homeInput = "";
   $scope.homeOutputLines = [];

@@ -26,6 +26,9 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <!-- angular cordova library -->
+    <script src="js/ng-cordova.min.js"></script>
+
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
@@ -58,6 +61,7 @@
             <button ng-click="registerButtonClick()">Register</button>
           </div>
           <div id="home" ng-hide="state != 'home'">
+            <div ng-if="dPlatform">I see your device is {{dPlatform}} {{dVersion}}</div>
             <label for="homeInput">Enter a thing</label>: <input type="text" ng-model="homeInput" id="homeInput">
             <button ng-click="submitButtonClick()">Submit</button>
             <br>
