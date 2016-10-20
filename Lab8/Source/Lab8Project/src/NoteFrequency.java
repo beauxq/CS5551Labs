@@ -29,7 +29,7 @@ public class NoteFrequency {
      * @param string "NAO" - where N = note name, A = accidental, O = octave (middle C 4)
      * @return frequency of a musical note
      */
-    private static double freq(String string) {
+    static double freq(String string) {
         // TODO: this could use some exception handling
 
         if (string.length() == 2) {
