@@ -20,3 +20,6 @@ https://github.com/beauxq/CS5551Labs/wiki/Lab-6
 
 Lab 7:
 https://github.com/beauxq/CS5551Labs/wiki/Lab-7
+
+Lab 8:
+https://github.com/beauxq/CS5551Labs/wiki/Lab-8
