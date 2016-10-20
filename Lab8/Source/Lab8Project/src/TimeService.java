@@ -20,14 +20,11 @@ public class TimeService {
 		DateFormat df = new SimpleDateFormat("HH mm ss");
 		Date now = new Date();
 		String[] hms = df.format(now).split("\\s");
-		Integer hour = Integer.parseInt(hms[0]);
-		Integer minute = Integer.parseInt(hms[1]);
-		Integer second = Integer.parseInt(hms[2]);
-		jsonObject.put("hour", hour);
-		jsonObject.put("minute", minute);
-		jsonObject.put("second", second);
+		jsonObject.put("hour", hms[0]);
+		jsonObject.put("minute", hms[1]);
+		jsonObject.put("second", hms[2]);
  
-		String result = "@Produces(\"application/json\") Output: \n\nCurrent Time: \n\n" + jsonObject;
+		String result = jsonObject.toString();
 		return Response.status(200).entity(result).build();
 	}
 }

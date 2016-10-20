@@ -21,7 +21,7 @@ public class NoteFrequency {
 		jsonObject.put("note", note);
 		jsonObject.put("frequency", freq(note));
 
-		String result = "@Produces(\"application/json\") Output: \n\nFrequency of given note: \n\n" + jsonObject;
+		String result = jsonObject.toString();
 		return Response.status(200).entity(result).build();
 	}
 

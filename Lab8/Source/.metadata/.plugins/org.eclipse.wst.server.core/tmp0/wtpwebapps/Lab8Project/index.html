@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="lab8" ng-controller="lab8Controller">
+<head>
+    <meta charset="ISO-8859-1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="index.js"></script>
+
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1 style="text-align: center">{{title}}</h1>
+
+    <div ng-hide="!haveTime">The server time is {{hour}}:{{minute}}:{{second}}</div>
+    <label>
+        Note: <input type="text" ng-model="note">
+    </label>
+    <button ng-click="getFrequency()">Get Frequency</button>
+    <div ng-hide="!haveFrequency">The frequency of this note is: {{frequency}} Hz</div>
+
+</body>
+</html>
