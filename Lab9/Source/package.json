@@ -11,5 +11,9 @@
     "API"
   ],
   "author": "Doug Hoskisson",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.76.0"
+  }
 }
