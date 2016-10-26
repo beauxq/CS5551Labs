@@ -1,0 +1,15 @@
+{
+  "name": "lab9",
+  "version": "1.0.0",
+  "description": "REST server-side mash-up",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "REST",
+    "API"
+  ],
+  "author": "Doug Hoskisson",
+  "license": "GPL-3.0"
+}
