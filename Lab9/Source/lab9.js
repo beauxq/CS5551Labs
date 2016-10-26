@@ -58,8 +58,12 @@ application.get(ENDPOINT, function (req, res) {
     });
 });
 
+// static files served
+application.use(express.static("public"));
+
 var server = application.listen(PORT, function () {
     var port = server.address().port;
 
-    console.log("server listening at http://localhost:%s%s", port, ENDPOINT)
+    console.log("server listening at http://localhost:%s", port);
+    console.log("serving API at http://localhost:%s%s", port, ENDPOINT)
 });
