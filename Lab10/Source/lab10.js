@@ -23,15 +23,26 @@ application.use(bodyParser.json());
 application.use(bodyParser.urlencoded({ extended: true }));
 
 // post = create from CRUD
+/**
+ *  To create a new user, pass an object like this to this API:
+ *
+ *  {
+ *      'username': username,
+ *      'password': password,
+ *      'firstName': firstName,
+ *      'lastName': lastName,
+ *      'email': email
+ *  }
+ */
 application.post(ENDPOINT, function (req, res) {
     var documentToInsert = req.body;
 
     MongoClient.connect(DATABASE_URL, function(err, db) {
-        if(err)
-        {
+        if(err) {
             res.status(StatusEnum.SERVER_ERROR);
             res.write("error connecting to database");
             res.end();
+            return;
         }
 
         checkUsernameExists(db, documentToInsert.username, function(exists) {
@@ -41,7 +52,7 @@ application.post(ENDPOINT, function (req, res) {
                 res.end();
             }
             else {  // username doesn't already exist
-                insertDocument(db, documentToInsert, function() {
+                upsertDocument(db, documentToInsert, function() {
                     res.write("insert success");
                     res.end();
                 });
@@ -51,73 +62,189 @@ application.post(ENDPOINT, function (req, res) {
 });
 
 // get = read from CRUD
+/**
+ *  Pass labeled search parameters for find()
+ *
+ *  example:
+ *  to return all users with usernames and names:
+ *  {
+ *      'query': {},
+ *      'fields': {
+ *          'username': true,
+ *          'firstName': true,
+ *          'lastName': true
+ *      }
+ *  }
+ *
+ *  to return user with specified username
+ *  {
+ *      'query': { 'username': username }
+ *  }
+ *
+ *  @returns: array of search results
+ */
 application.get(ENDPOINT, function (req, res) {
-    var result={
-        "thing": req.query.thing,
-        "type": "",
-        "shortUrl": ""
-    };
+    var searchParameters = req.body;
 
-    if (! result.thing) {
-        return console.log('Error: parameter "thing" required');
-    }
-
-    request(API1 + result.thing, function (error, response, body) {
-        if(error){
-            return console.log('API1 error:', error);
+    MongoClient.connect(DATABASE_URL, function(err, db) {
+        if (err) {
+            res.status(StatusEnum.SERVER_ERROR);
+            res.write("error connecting to database");
+            res.end();
         }
 
-        if(response.statusCode !== StatusEnum.SUCCESS){
-            return console.log('API1 invalid status code returned:', response.statusCode);
-        }
-
-        console.log(body);
-        body = JSON.parse(body);
-        var description = body.itemListElement[0].result.description;
-        var url = body.itemListElement[0].result.detailedDescription.url;
-        result.type = description;
-
-        request.post({
-            url: API2,
-            json: { longUrl: url }
-        }, function(error, response, body){
-            if(error){
-                return console.log('API2 error:', error);
-            }
-
-            if(response.statusCode !== SUCCESS){
-                return console.log('API2 invalid status code returned:', response.statusCode);
-            }
-
-            console.log(body);
-            // body = JSON.parse(body);
-            result.shortUrl = body.id;
-
+        getResults(db, searchParameters, function(results) {
             res.contentType('application/json');
-            res.write(JSON.stringify(result));
-            console.log(result);
+            res.write(JSON.stringify({'results': results}));
             res.end();
         });
     });
 });
 
-var insertDocument = function(db, data, callback) {
-    db.collection(COLLECTION).insertOne(data, function(err, res) {
-        if(err)
-        {
+// put = update from CRUD
+application.put(ENDPOINT, function(req, res) {
+    var documentToUpdate = req.body;
+
+    if (! documentToUpdate._id) {
+        res.status(StatusEnum.BAD_REQUEST);
+        res.write("need an already existing user");
+        res.end();
+        return;
+    }
+    MongoClient.connect(DATABASE_URL, function(err, db) {
+        if (err) {
             res.status(StatusEnum.SERVER_ERROR);
-            res.write("error creating user");
+            res.write("error connecting to database");
             res.end();
+            return;
+        }
+
+        upsertDocument(db, documentToUpdate, function() {
+            res.write("update success");
+            res.end();
+        });
+    });
+});
+
+var testPut = function() {
+    MongoClient.connect(DATABASE_URL, function(err, db) {
+        if (err) {
+            console.log("error connecting to database");
+            return;
+        }
+
+        getResults(db, {'username': "un"}, function(results) {
+            var copy = results[0];
+
+            copy.lastName = "ln7";
+
+            upsertDocument(db, copy, function() {
+                console.log("update success");
+            });
+        });
+    });
+};
+
+// del = delete from CRUD
+/**
+ *  pass a document with a username
+ */
+application.del(ENDPOINT, function(req, res) {
+    var usernameToDelete = req.body.username;
+
+    if (! usernameToDelete) {
+        res.status(StatusEnum.BAD_REQUEST);
+        res.write("need a document with a username");
+        res.end();
+        return;
+    }
+    MongoClient.connect(DATABASE_URL, function(err, db) {
+        if (err) {
+            res.status(StatusEnum.SERVER_ERROR);
+            res.write("error connecting to database");
+            res.end();
+            return;
+        }
+
+        removeDocument(db, usernameToDelete, function() {
+            res.write("user removed");
+            res.end();
+        });
+    });
+});
+
+var testDelete = function() {
+    MongoClient.connect(DATABASE_URL, function(err, db) {
+        if (err) {
+            console.log("error connecting to database");
+            return;
+        }
+
+        removeDocument(db, "un2", function() {
+            console.log("user removed");
+        });
+    });
+};
+
+var upsertDocument = function(db, data, callback) {
+    db.collection(COLLECTION).updateOne({'username':data.username}, data, {upsert:true, w: 1}, function(err, res) {
+        if(err) {
+            console.log("error creating user");
+            console.log(err);
+            return;
         }
         console.log("inserted a document into the " + COLLECTION + " collection");
+        console.log("res: " + res);
+        callback();
+    });
+};
+
+var removeDocument = function(db, usernameToDelete, callback) {
+    db.collection(COLLECTION).findOneAndDelete({'username': usernameToDelete}, function(err, res) {
+        if(err) {
+            res.status(StatusEnum.SERVER_ERROR);
+            res.write("error deleting user");
+            res.end();
+            return;
+        }
+        console.log("remove success");
         callback();
     });
 };
 
 var checkUsernameExists = function(db, username, callback) {
     db.collection(COLLECTION).findOne({'username':username}, function(err, document) {
+        if (err) {
+            console.log("error looking for username in database");
+        }
         console.log(document);
         callback(document !== null);
+    });
+};
+
+var getResults = function(db, searchParameter, callback) {
+    db.collection(COLLECTION).find(searchParameter.query,
+                                   searchParameter.fields,
+                                   {},  // options
+                                   function(err, resultCursor) {
+        console.log("callback function of find");
+        if (err) {
+            console.log("error searching database");
+            callback([]);
+        }
+        else {
+            resultCursor.toArray(function(err, resultArray) {
+                if (err) {
+                    console.log("error retrieving search results from database");
+                    callback([]);
+                }
+                else {
+                    console.log("callback function of toArray");
+                    // console.log(resultArray);
+                    callback(resultArray);
+                }
+            });
+        }
     });
 };
 
@@ -128,5 +255,5 @@ var server = application.listen(PORT, function () {
     var port = server.address().port;
 
     console.log("server listening at http://localhost:%s", port);
-    console.log("serving API at http://localhost:%s%s", port, ENDPOINT)
+    console.log("serving API at http://localhost:%s%s", port, ENDPOINT);
 });

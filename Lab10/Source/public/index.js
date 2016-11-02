@@ -38,10 +38,16 @@ application.controller("lab10Controller", function($scope, $http) {
     };
 
     $scope.loginLoginButtonClick = function() {
+
+
         $scope.state = "home";
     };
 
     $scope.registerRegisterButtonClick = function() {
+        if (! $scope.registerUsername) {
+            return;
+        }
+
         var dataParameters = {
             'username': $scope.registerUsername,
             'password': $scope.registerPassword,
