@@ -125,7 +125,7 @@ application.controller("lab10Controller", function($scope, $http) {
             alert("error saving profile: " + response.body);
         });
     };
-    
+
     $scope.homeDeleteButtonClick = function() {
         $http.post(DEL_ENDPOINT, {'username': $scope.homeUsername}).then(function() {
             $scope.state = "start";
