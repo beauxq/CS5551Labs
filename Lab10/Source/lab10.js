@@ -8,6 +8,7 @@ var assert = require('assert');
 var bodyParser = require("body-parser");
 var express = require('express');
 var request = require('request');
+var cors = require('cors');
 
 var application = express();
 
