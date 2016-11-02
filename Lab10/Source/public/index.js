@@ -3,6 +3,7 @@
  */
 
 var ENDPOINT = "/data";
+var READ_ENDPOINT = "/dataread";
 
 var application = angular.module("lab10", []);
 
@@ -38,9 +39,50 @@ application.controller("lab10Controller", function($scope, $http) {
     };
 
     $scope.loginLoginButtonClick = function() {
+        $scope.homeUsername = $scope.loginUsername;
 
+        var request1 = $http({
+            method: 'POST',
+            url: READ_ENDPOINT,
+            data: {
+                'query': {},  // everything
+                'fields': {
+                    'username': true,
+                    'firstName': true,
+                    'lastName': true
+                }
+            }
+        });
 
-        $scope.state = "home";
+        request1.success(function(data, status, headers, config) {
+            $scope.userList = data.results;
+            console.log(data);
+
+            var request2 = $http.post(READ_ENDPOINT, {
+                'query': {'username': $scope.homeUsername}  // user that logged in
+            });
+
+            request2.success(function(data, status, headers, config) {
+                console.log("success for request2");
+                console.log(data);
+                if (data.results.length === 0) {
+                    alert("invalid log in");
+                    $scope.state = "start";
+                }
+                else {
+                    $scope.userProfile = data.results[0];
+                    $scope.state = "home";
+                }
+            });
+            request2.error(function(data, status, headers, config) {
+                alert("error retrieving your profile: " + JSON.stringify({data: data}));
+                $scope.state = "start";
+            });
+        });
+        request1.error(function(data, status, headers, config) {
+            alert( "error getting user list: " + JSON.stringify({data: data}));
+            $scope.state = "start";
+        });
     };
 
     $scope.registerRegisterButtonClick = function() {

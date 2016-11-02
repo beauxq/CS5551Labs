@@ -1,5 +1,6 @@
 var PORT = 8081;
 var ENDPOINT = "/data";
+var READ_ENDPOINT = "/dataread";
 var DATABASE_URL = "mongodb://beauxq:beauxq@ds051873.mlab.com:51873/tut8test";
 var COLLECTION = "lab10Collection";
 var StatusEnum = Object.freeze({
@@ -61,7 +62,7 @@ application.post(ENDPOINT, function (req, res) {
     });
 });
 
-// get = read from CRUD
+// post to READ_ENDPOINT = read from CRUD
 /**
  *  Pass labeled search parameters for find()
  *
@@ -83,8 +84,11 @@ application.post(ENDPOINT, function (req, res) {
  *
  *  @returns: array of search results
  */
-application.get(ENDPOINT, function (req, res) {
+application.post(READ_ENDPOINT, function (req, res) {
     var searchParameters = req.body;
+
+    console.log("received read request for:");
+    console.log(searchParameters);
 
     MongoClient.connect(DATABASE_URL, function(err, db) {
         if (err) {
