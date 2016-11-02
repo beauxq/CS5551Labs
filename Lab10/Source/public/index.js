@@ -2,6 +2,8 @@
  * JavaScript for index.html
  */
 
+var ENDPOINT = "/data";
+
 var application = angular.module("lab10", []);
 
 application.directive('enterPress', function () {
@@ -40,36 +42,25 @@ application.controller("lab10Controller", function($scope, $http) {
     };
 
     $scope.registerRegisterButtonClick = function() {
-        /*
+        var dataParameters = {
+            'username': $scope.registerUsername,
+            'password': $scope.registerPassword,
+            'firstName': $scope.registerFirstName,
+            'lastName': $scope.registerLastName,
+            'email': $scope.registerEmail
+        };
 
-         console.log($scope.formData.lname);
-         console.log($scope.formData.fname);
-         console.log($scope.formData.email);
-         console.log($scope.formData.password);
-         console.log($scope.formData.cpassword);
-         var dataParams = {
-         'fname' : $scope.fname,
-         'lname' : $scope.lname,
-         'email' : $scope.email,
-         'pw' : $scope.pw
-         };
-         var config = {
-         headers : {
-         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-         }
-         }
-         var req = $http.post('http://127.0.0.1:8081/register',$scope.formData);
-         req.success(function(data, status, headers, config) {
-         $scope.message = data;
-         console.log(data);
-         });
-         req.error(function(data, status, headers, config) {
-         alert( "failure message: " + JSON.stringify({data: data}));
-         });
-         */
-
-        $scope.loginUsername = $scope.registerUsername;
-        $scope.state = "login";
+        var request = $http.post(ENDPOINT, dataParameters);
+        request.success(function(data, status, headers, config) {
+            $scope.message = data;
+            console.log(data);
+            $scope.loginUsername = $scope.registerUsername;
+            $scope.state = "login";
+        });
+        request.error(function(data, status, headers, config) {
+            alert("error: " + data);
+            $scope.state = "start";
+        });
     };
 
     $scope.getInformationButtonClick = function() {

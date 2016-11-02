@@ -16,6 +16,8 @@
 <body ng-app="lab10">
 <div ng-controller="lab10Controller" ng-cloak>
     <h2 style="margin-left: 20px;">Lab 10</h2>
+
+    <!-- starting screen -->
     <div ng-hide="state!='start'" class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
@@ -26,6 +28,8 @@
             </div>
         </div>
     </div>
+
+    <!-- login screen -->
     <div ng-hide="state!='login'" class="container">
         <div class="row">
             <label class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">Username
@@ -39,6 +43,8 @@
             <button class="btn btn-default" ng-click="loginLoginButtonClick()">Log In</button>
         </div>
     </div>
+
+    <!-- registration screen -->
     <div ng-hide="state!='reg'" class="container">
         <div class="row">
             <label class="form-group">Username
@@ -51,9 +57,26 @@
             </label>
         </div>
         <div class="row">
+            <label class="form-group">First Name
+                <input type="text" class="form-control" ng-model="registerFirstName">
+            </label>
+        </div>
+        <div class="row">
+            <label class="form-group">Last Name
+                <input type="text" class="form-control" ng-model="registerLastName">
+            </label>
+        </div>
+        <div class="row">
+            <label class="form-group">Email
+                <input type="text" class="form-control" ng-model="registerEmail">
+            </label>
+        </div>
+        <div class="row">
             <button class="btn btn-default" ng-click="registerRegisterButtonClick()">Register</button>
         </div>
     </div>
+
+    <!-- home screen -->
     <div ng-hide="state!='home'" class="container">
         home page
     </div>
