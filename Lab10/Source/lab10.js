@@ -1,6 +1,7 @@
 var PORT = 8081;
 var ENDPOINT = "/data";
 var READ_ENDPOINT = "/dataread";
+var DEL_ENDPOINT = "/datadel";
 var DATABASE_URL = "mongodb://beauxq:beauxq@ds051873.mlab.com:51873/tut8test";
 var COLLECTION = "lab10Collection";
 var StatusEnum = Object.freeze({
@@ -115,6 +116,7 @@ application.put(ENDPOINT, function(req, res) {
         res.end();
         return;
     }
+    delete documentToUpdate._id;
     MongoClient.connect(DATABASE_URL, function(err, db) {
         if (err) {
             res.status(StatusEnum.SERVER_ERROR);
@@ -123,7 +125,13 @@ application.put(ENDPOINT, function(req, res) {
             return;
         }
 
-        upsertDocument(db, documentToUpdate, function() {
+        upsertDocument(db, documentToUpdate, function(err) {
+            if (err) {
+                res.status(StatusEnum.SERVER_ERROR);
+                res.write(err);
+                res.end();
+                return;
+            }
             res.write("update success");
             res.end();
         });
@@ -149,11 +157,11 @@ var testPut = function() {
     });
 };
 
-// del = delete from CRUD
+// post to DEL_ENDPOINT = delete from CRUD
 /**
  *  pass a document with a username
  */
-application.del(ENDPOINT, function(req, res) {
+application.post(DEL_ENDPOINT, function(req, res) {
     var usernameToDelete = req.body.username;
 
     if (! usernameToDelete) {
@@ -195,11 +203,12 @@ var upsertDocument = function(db, data, callback) {
         if(err) {
             console.log("error creating user");
             console.log(err);
+            callback(err);
             return;
         }
         console.log("inserted a document into the " + COLLECTION + " collection");
         console.log("res: " + res);
-        callback();
+        callback(null);  // no error
     });
 };
 

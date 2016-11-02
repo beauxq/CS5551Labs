@@ -4,6 +4,7 @@
 
 var ENDPOINT = "/data";
 var READ_ENDPOINT = "/dataread";
+var DEL_ENDPOINT = "/datadel";
 
 var application = angular.module("lab10", []);
 
@@ -39,6 +40,10 @@ application.controller("lab10Controller", function($scope, $http) {
     };
 
     $scope.loginLoginButtonClick = function() {
+        if (! $scope.loginUsername) {
+            return;
+        }
+
         $scope.homeUsername = $scope.loginUsername;
 
         var request1 = $http({
@@ -111,11 +116,19 @@ application.controller("lab10Controller", function($scope, $http) {
         });
     };
 
-    $scope.getInformationButtonClick = function() {
-        console.log("button clicked");
-        $http.get("thingInfo?thing=" + $scope.thing).then(function(response) {
-            $scope.description = response.data.type;
-            $scope.shortUrl = response.data.shortUrl;
+    $scope.homeSaveButtonClick = function() {
+        $http.put(ENDPOINT, $scope.userProfile).then(function(response) {
+            // success
+            alert("profile saved");
+        }, function(response) {
+            // error
+            alert("error saving profile: " + response.body);
         });
+    };
+    
+    $scope.homeDeleteButtonClick = function() {
+        $http.post(DEL_ENDPOINT, {'username': $scope.homeUsername}).then(function() {
+            $scope.state = "start";
+        })
     };
 });

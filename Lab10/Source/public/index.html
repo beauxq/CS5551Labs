@@ -78,7 +78,51 @@
 
     <!-- home screen -->
     <div ng-hide="state!='home'" class="container">
-        home page
+        <div class="row">
+            <h4>List of users</h4>
+        </div>
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-sm-2">Username</div>
+            <div class="col-sm-2">First Name</div>
+            <div class="col-sm-2">Last Name</div>
+        </div>
+        <div class="row" ng-repeat="user in userList">
+            <div class="col-sm-2">{{user.username}}</div>
+            <div class="col-sm-2">{{user.firstName}}</div>
+            <div class="col-sm-2">{{user.lastName}}</div>
+        </div>
+        <div class="row">
+            <h4>Your profile</h4>
+        </div>
+        <div class="row">
+            <label class="form-group">Username
+                <input type="text" class="form-control" ng-model="userProfile.username" disabled>
+            </label>
+        </div>
+        <div class="row">
+            <label class="form-group">Password
+                <input type="password" class="form-control" ng-model="userProfile.password">
+            </label>
+        </div>
+        <div class="row">
+            <label class="form-group">First Name
+                <input type="text" class="form-control" ng-model="userProfile.firstName">
+            </label>
+        </div>
+        <div class="row">
+            <label class="form-group">Last Name
+                <input type="text" class="form-control" ng-model="userProfile.lastName">
+            </label>
+        </div>
+        <div class="row">
+            <label class="form-group">Email
+                <input type="text" class="form-control" ng-model="userProfile.email">
+            </label>
+        </div>
+        <div class="row">
+            <button class="btn btn-default" ng-click="homeSaveButtonClick()">Save changes</button>
+            <button class="btn btn-danger" ng-click="homeDeleteButtonClick()">Delete account</button>
+        </div>
     </div>
 
     <!-- old stuff from lab 9 I might want to reference
