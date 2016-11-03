@@ -4,6 +4,7 @@
   "description": "REST CRUD interface",
   "main": "lab10.js",
   "scripts": {
+    "start": "node lab10.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
